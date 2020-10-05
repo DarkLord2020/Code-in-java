@@ -1,0 +1,35 @@
+class Solution {
+    int prev = Integer.MIN_VALUE;
+    int cnt = 0;
+    int max = 0;
+    public int[] findMode(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        inorder(root, list);
+        return list.stream().mapToInt(i->i).toArray();
+    }
+    private void inorder(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left, list);
+        if (root.val == prev) {
+            cnt++;
+            
+        } else {
+            cnt = 1;
+        }
+        if (cnt >= max) {
+            if (cnt == max) {
+               list.add(root.val);
+            } else {
+                list.clear();
+                list.add(root.val);
+                
+                
+            }
+        }
+        max = Math.max(max,cnt);
+        prev = root.val;
+        inorder(root.right, list);
+    }
+}
